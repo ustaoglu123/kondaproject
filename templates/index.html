@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ce2226">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Konda Ne Sordu?</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/kondao.png') }}" type="image/x-icon">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Kendi CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Sol Üst Köşe Favori Butonu -->
+    <button id="favoriteToggle" class="favorite-toggle">Favorileri Aç</button>
+
+    <main class="content">
+        <!-- Logo -->
+        <div class="logo-container">
+            <a href="https://konda.com.tr/" target="_blank">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Konda Logo" class="google-logo">
+            </a>
+        </div>  
+
+        
+        <!-- Arama Kutusu -->
+        <div class="search-bar">
+            <form class="input-group input-group-lg main-search" action="/search" method="POST">
+                <input type="text" class="form-control rounded-0" name="q" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Kontent'te Ara">
+                <input type="submit" hidden="">
+                <button class="btn btn-danger rounded-0 px-4" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+        <!-- Sonuçların Listeleneceği Alan -->
+        <div id="results" class="results-container"></div>
+
+        <!-- Favori Sorular Sidebar -->
+        <div id="favorites" class="favorites-container hidden">
+            <h3>Favori Sorular</h3>
+            <div class="favorites-list" id="favoritesList">
+                <!-- Favori sorular buraya dinamik olarak eklenecek -->
+            </div>
+            <div class="email-form">
+                <input type="email" id="emailInput" placeholder="E-posta adresinizi girin" required>
+                <button id="sendEmailButton">Favorileri E-posta ile Gönder</button>
+            </div>
+        </div>
+    </main>
+     
+    <!-- FOOTER -->
+    <footer>
+        <div class="footerContainer">
+            <div class="footerContent">
+                <div class="contactInfo">
+                    <p>
+                        <strong class="red-text">A</strong> Yıldız Mah. Şair Naifi Sok. No: 2 Beşiktaş / İstanbul
+                        <span class="spacer"></span>
+                        <strong class="red-text">E</strong> <a href="mailto:bilgi@konda.com.tr" class="underline-on-hover">bilgi@konda.com.tr</a>
+                        <span class="spacer"></span>
+                        <strong class="red-text">T</strong> <a href="tel:+902122751766" class="underline-on-hover">+90 212 275 1766</a>
+                    </p>
+                </div>
+                <div class="socialIcons">
+                    <a href="https://tr-tr.facebook.com/kondaarastirma" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/kondaarastirma/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://x.com/kondaarastirma" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://www.linkedin.com/company/kondaarastirma/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footerBottom">
+                <div class="divider"></div>
+                <p>Copyright &copy;2025 Konda Araştırma ve Danışmanlık; Developed by 
+                    <span class="designer">
+                        Göktuğ Ustaoğlu
+                        <a href="mailto:goktug.ustaoglu@icloud.com" class="email">goktug.ustaoglu@icloud.com</a>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 

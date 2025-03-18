@@ -1,0 +1,460 @@
+/* 🔹 Temel Sıfırlama ve Genel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 🔹 Ana İçerik */
+.content {
+    flex: 1;
+    width: 100%;
+    padding: 20px;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* 🔹 Logo */
+.logo-container {
+    margin-bottom: 30px;
+}
+
+.google-logo {
+    width: 270px;
+    height: auto;
+}
+
+/* 🔹 Arama Çubuğu */
+.search-bar {
+    position: relative;
+    border: 1px dashed #ca2b27;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 800px;
+    max-width: 90%;
+    margin: 0 auto;
+    background-color: white;
+}
+.search-bar form {
+    height: 46px;
+    width: 100%;
+    display: flex;
+}
+
+.search-bar form button {
+    width: 50px;
+}
+
+.search-bar form input {
+    background: transparent;
+    border: none;
+    padding: 5px;
+    color: #333;
+    outline: none;
+    box-shadow: none;
+    height: 50px;
+    flex: 1;
+    height: 100%;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Alt kırmızı çizgi */
+/* .search-bar::before {
+    content: "";
+    position: absolute;
+    bottom: -8px; 
+    left: 0;
+    width: 100%;
+    height: 6px; 
+    background-color: #ca2b27; 
+} */
+
+.main-search {
+    border-bottom: 3px #ca2b27 solid;
+  }
+  .main-search:before {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 28px;
+    right: auto;
+    top: auto;
+    bottom: -32px;
+    border: 16px solid;
+    border-color: #ca2b27 transparent transparent #ca2b27;
+    z-index: 1000;
+  }
+  .main-search:after {
+    content: " ";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 31px;
+    right: auto;
+    top: auto;
+    bottom: -24px;
+    border: 13px solid;
+    border-color: #ffffff transparent transparent #ffffff;
+    z-index: 1001;
+  }
+  
+  .main-search .btn-danger {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #ca2b27;
+    --bs-btn-border-color: #ca2b27;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #bb2d3b;
+    --bs-btn-hover-border-color: #b02a37;
+    --bs-btn-focus-shadow-rgb: 225, 83, 97;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #b02a37;
+    --bs-btn-active-border-color: #a52834;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #ca2b27;
+    --bs-btn-disabled-border-color: #ca2b27;
+  }
+  
+
+.icon {
+    color: #9aa0a6;
+    font-size: 20px;
+}
+
+
+/* 🔹 Sonuçlar Konteyneri */
+.results-container {
+    width: 800px;
+    max-width: 90%;
+    margin: 20px auto;
+    background-color: rgb(255, 255, 255);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.results-container.visible {
+    display: block;
+}
+
+/* 🔹 Sonuç Öğeleri */
+.result-item {
+    padding: 15px;
+    border-bottom: 1px solid rgba(243, 145, 145, 0.1);
+    cursor: pointer;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item:hover {
+    background-color: rgba(235, 134, 134, 0.05);
+}
+
+/* 🔹 Favori Butonları */
+.favorite-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1500;
+    background-color: #ce2226;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.favorite-toggle:hover {
+    background-color: #b41e22;
+}
+
+/* 🔹 Favoriler Sidebar */
+#favorites {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 400px;
+    height: calc(100vh - 100px);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: left 0.2s ease;
+    z-index: 2000;
+    overflow-y: auto;
+    margin-bottom: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+#favorites.visible {
+    left: 0;
+}
+
+#favorites h3 {
+    margin-bottom: 20px;
+    margin-top: 40px;
+    color: #333;
+    text-align: center;
+    font-size: 18px;
+}
+
+.favorites-list {
+    margin-bottom: 20px;
+}
+
+.favorite-item {
+    padding: 12px;
+    margin: 8px 0;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favorite-item:hover {
+    background-color: #f1f3f4;
+}
+
+/* 🔹 E-posta Formu */
+.email-form {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.email-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.email-form input:focus {
+    outline: none;
+    border-color: #ce2226;
+}
+
+.email-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #ce2226;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.email-form button:hover {
+    background-color: #ce2226;
+}
+
+/* 🔹 Footer */
+footer {
+    background-color: #ce2226;
+    padding: 12px 0;
+    margin-top: auto;
+}
+
+.footerContainer {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.contactInfo {
+    color: white;
+    font-size: 16px;
+}
+
+.contactInfo a {
+    color: white;
+    text-decoration: none;
+}
+
+.red-text {
+    color: white;
+    font-weight: bold;
+}
+
+.spacer {
+    margin: 0 8px;
+}
+
+.socialIcons {
+    display: flex;
+    gap: 30px;
+}
+
+.socialIcons a {
+    color: white;
+    font-size: 26px;
+}
+
+.footerBottom {
+    margin-top: 12px;
+    text-align: center;
+    color: white;
+    font-size:12px;
+}
+
+.divider {
+    height: 1px;
+    background-color: rgba(39, 10, 10, 0.2);
+    margin: 8px 0;
+}
+
+.designer {
+    font-size:12px;
+    opacity: 1;
+}
+
+.designer .email {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+/* 🔹 Mobil ve Tablet Ortak Düzenlemeler */
+@media (max-width: 1024px) {
+    .content {
+        margin-top: 70px;
+        padding-top: 20px;
+    }
+
+    #favorites {
+        width: 100%;
+        height: 100vh;
+        max-height: none;
+        padding: 20px;
+        border-radius: 0;
+        top: 0;
+        margin: 0;
+        background-color: rgba(255, 255, 255, 0.98);
+    }
+
+    .favorite-toggle {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: auto;
+    }
+
+    .footerContent {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .contactInfo {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .spacer {
+        display: none;
+    }
+
+    .socialIcons {
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    footer {
+        padding: 10px 0;
+    }
+
+    .footerBottom {
+        margin-top: 10px;
+    }
+
+    .designer {
+        font-size: 10px;
+    }
+}
+
+/* 🔹 Mobil Düzenlemeler */
+@media (max-width: 767px) {
+    body {
+        min-height: 100vh;
+    }
+
+    .content {
+        padding: 15px;
+        margin-top: 70px;
+    }
+
+    .google-logo {
+        width: 200px;
+    }
+
+    .search-bar {
+        height: 45px;
+        width: 95%;
+    }
+
+    .results-container {
+        width: 95%;
+        margin: 15px auto;
+        max-height: 60vh;
+    }
+}
+
+/* 🔹 Tablet Düzenlemeler */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .search-bar {
+        width: 90%;
+    }
+
+    .results-container {
+        width: 90%;
+    }
+}
