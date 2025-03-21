@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Temel elementleri seç
     const searchInput = document.getElementById("searchInput");
     const resultsContainer = document.getElementById("results");
-    const micButton = document.getElementById("micButton");
     const favoritesContainer = document.getElementById("favorites");
     const favoritesList = document.getElementById("favoritesList");
     const emailForm = document.querySelector(".email-form");
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const favoriteToggle = document.getElementById("favoriteToggle");
     const footer = document.querySelector('footer');
 
-    // Favori soruları localStorage'dan al
+    
     let favoriteQuestions = JSON.parse(localStorage.getItem("favorites")) || [];
 
     // Favori butonlarına tıklama olayı
@@ -23,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Favori butonları için ortak click olayı
+    
     function handleFavoriteButtonClick(event) {
         event.stopPropagation();
         favoritesContainer.classList.toggle("visible");
@@ -66,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Favori ekle
+    
     function addFavorite(question) {
         if (!favoriteQuestions.includes(question)) {
             favoriteQuestions.push(question);
@@ -76,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Favori kaldır
+  
     function removeFavorite(index) {
         favoriteQuestions.splice(index, 1);
         localStorage.setItem("favorites", JSON.stringify(favoriteQuestions));
@@ -92,21 +91,50 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // E-posta gönderme
-    sendEmailButton.addEventListener("click", function() {
-        const email = emailInput.value.trim();
+    document.getElementById("sendEmailButton").addEventListener("click", function () {
+        const email = document.getElementById("emailInput").value.trim();
+        const userNotes = document.getElementById("userNotes").value.trim();
+        const favoriteQuestions = JSON.parse(localStorage.getItem("favorites")) || [];
+    
+        
         if (!email) {
             alert("Lütfen geçerli bir e-posta adresi girin.");
             return;
         }
-
-        const favoritesText = favoriteQuestions.join("\n");
-        // Burada e-posta gönderme API'si entegre edilebilir
-        console.log(`Favoriler "${email}" adresine gönderiliyor:\n${favoritesText}`);
-        alert(`Favori sorularınız "${email}" adresine gönderildi!`);
-    });
-
     
+        // Favori sorular ve notlar birleştirilir
+        const emailContent = {
+            email: email,
+            favorites: favoriteQuestions,
+            notes: userNotes
+        };
+    
+        // API'ye POST isteği
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emailContent),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Favori sorularınız ve notlarınız başarıyla gönderildi!");
+            } else {
+                alert("E-posta gönderilirken bir hata oluştu.");
+            }
+        })
+        .catch(error => {
+            console.error("Hata:", error);
+            alert("E-posta gönderilirken bir hata oluştu.");
+        });
+    });
+    searchInput.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+        }
+    });
     // Arama işlemi
     searchInput.addEventListener("input", function () {
         let query = searchInput.value.trim();
@@ -246,6 +274,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // İlk yüklemede favorileri göster
+    
     updateFavoritesList();
 }); 

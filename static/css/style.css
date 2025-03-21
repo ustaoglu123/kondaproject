@@ -46,33 +46,56 @@ body {
     height: auto;
 }
 
-/* 🔹 Arama Çubuğu */
+/* 🔹 Arama Çubuğu Güncellemeleri */
 .search-bar {
     position: relative;
-    border: 1px dashed #ca2b27;
+    border: 1px solid #ddd;
+    border-top: 1px solid #ddd;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     height: 50px;
     width: 800px;
     max-width: 90%;
     margin: 0 auto;
-    background-color: white;
-}
-.search-bar form {
-    height: 46px;
-    width: 100%;
-    display: flex;
+    background-color: #f8f9fa;
 }
 
-.search-bar form button {
-    width: 50px;
+.search-bar form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    padding: 0;
+    border-bottom: 3px solid #ca2b27;
+}
+
+.search-bar form .search-icon-area {
+    width: 70px;
+    background-color: #ca2b27;
+    border: 1px solid #ca2b27;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.search-bar form .search-icon-area:hover {
+    background-color: #b41e22;
+}
+
+.search-bar form .search-icon-area .icon {
+    color: white;
+    font-size: 24px;
+    transition: all 0.3s ease;
 }
 
 .search-bar form input {
     background: transparent;
     border: none;
-    padding: 5px;
+    padding: 5px 15px;
     color: #333;
     outline: none;
     box-shadow: none;
@@ -83,21 +106,11 @@ body {
     width: 100%;
 }
 
-/* Alt kırmızı çizgi */
-/* .search-bar::before {
-    content: "";
-    position: absolute;
-    bottom: -8px; 
-    left: 0;
-    width: 100%;
-    height: 6px; 
-    background-color: #ca2b27; 
-} */
-
 .main-search {
-    border-bottom: 3px #ca2b27 solid;
-  }
-  .main-search:before {
+    position: relative;
+}
+
+.main-search:before {
     content: " ";
     position: absolute;
     width: 0;
@@ -109,8 +122,9 @@ body {
     border: 16px solid;
     border-color: #ca2b27 transparent transparent #ca2b27;
     z-index: 1000;
-  }
-  .main-search:after {
+}
+
+.main-search:after {
     content: " ";
     position: absolute;
     width: 0;
@@ -122,37 +136,19 @@ body {
     border: 13px solid;
     border-color: #ffffff transparent transparent #ffffff;
     z-index: 1001;
-  }
-  
-  .main-search .btn-danger {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: #ca2b27;
-    --bs-btn-border-color: #ca2b27;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #bb2d3b;
-    --bs-btn-hover-border-color: #b02a37;
-    --bs-btn-focus-shadow-rgb: 225, 83, 97;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #b02a37;
-    --bs-btn-active-border-color: #a52834;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #fff;
-    --bs-btn-disabled-bg: #ca2b27;
-    --bs-btn-disabled-border-color: #ca2b27;
-  }
-  
+}
 
 .icon {
     color: #9aa0a6;
-    font-size: 20px;
+    font-size: 24px;
+    
 }
-
 
 /* 🔹 Sonuçlar Konteyneri */
 .results-container {
     width: 800px;
     max-width: 90%;
-    margin: 20px auto;
+    margin: 35px auto 20px;
     background-color: rgb(255, 255, 255);
     border-radius: 15px;
     padding: 20px;
@@ -166,6 +162,18 @@ body {
 
 .results-container.visible {
     display: block;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 🔹 Sonuç Öğeleri */
@@ -173,6 +181,36 @@ body {
     padding: 15px;
     border-bottom: 1px solid rgba(243, 145, 145, 0.1);
     cursor: pointer;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: itemSlideDown 0.3s ease-out forwards;
+    text-align: left; /* Yazıları sola hizala */
+    
+}
+
+.result-item:nth-child(1) { animation-delay: 0s; }
+.result-item:nth-child(2) { animation-delay: 0.05s; }
+.result-item:nth-child(3) { animation-delay: 0.1s; }
+.result-item:nth-child(4) { animation-delay: 0.15s; }
+.result-item:nth-child(5) { animation-delay: 0.2s; }
+.result-item:nth-child(6) { animation-delay: 0.25s; }
+.result-item:nth-child(7) { animation-delay: 0.3s; }
+.result-item:nth-child(8) { animation-delay: 0.35s; }
+.result-item:nth-child(9) { animation-delay: 0.4s; }
+.result-item:nth-child(10) { animation-delay: 0.45s; }
+.result-item:nth-child(11) { animation-delay: 0.48s; }
+.result-item:nth-child(12) { animation-delay: 0.49s; }
+.result-item:nth-child(13) { animation-delay: 0.50s; }
+
+@keyframes itemSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .result-item:last-child {
@@ -182,14 +220,40 @@ body {
 .result-item:hover {
     background-color: rgba(235, 134, 134, 0.05);
 }
+.etiket-bilgi {
+    color: #c72232;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
+/* Bilgi Kutusu Stili */
+.info-box {
+    background-color: #ffffff; /* Arka plan rengi */
+    padding: 15px; /* Yazıların etrafına boşluk */
+    border-radius: 8px; /* Köşeleri yuvarlak yap */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    margin-top: 10px; /* Sorudan biraz uzaklaştır */
+    border: 1px solid #ddd; /* Kenarlık ekle */
+    position: relative;
+    z-index: 1000;
+}
+
+.info-box p {
+    margin: 0; /* Paragrafın varsayılan margin'ini kaldır */
+    line-height: 1.5; /* Satır aralığını artır */
+}
+
+.info-box.error {
+    background-color: #ffe6e6; /* Hata mesajı için farklı bir arka plan rengi */
+    border-color: #ffcccc; /* Hata mesajı için farklı bir kenarlık rengi */
+}
 /* 🔹 Favori Butonları */
 .favorite-toggle {
     position: fixed;
     top: 20px;
     left: 20px;
     z-index: 1500;
-    background-color: #ce2226;
+    background-color: #c82333;
     color: white;
     border: none;
     border-radius: 8px;
@@ -249,9 +313,30 @@ body {
     background-color: #f1f3f4;
 }
 
+
+/* Kullanıcı Notları Bölümü */
+.user-notes {
+    margin-bottom: 20px;
+}
+
+.user-notes textarea:focus {
+    border-color: #ff0000; /* Kırmızı renk */
+    outline: none; /* Varsayılan mavi outline'ı kaldır */
+}
+
+.user-notes textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
 /* 🔹 E-posta Formu */
 .email-form {
-    padding: 15px;
+    padding: 0px;
     background-color: #f8f9fa;
     border-radius: 8px;
     margin-top: 20px;
@@ -288,7 +373,7 @@ body {
 
 /* 🔹 Footer */
 footer {
-    background-color: #ce2226;
+    background-color: #c82333;
     padding: 12px 0;
     margin-top: auto;
 }
@@ -445,9 +530,43 @@ footer {
         width: 95%;
         margin: 15px auto;
         max-height: 60vh;
+        position: relative;
+        top: 10px; /* Arama çubuğundan biraz aşağıya kaydır */
+    }
+
+    /* Arama çubuğundaki üçgenin mobildeki konumu */
+    .main-search:before {
+        left: 10px; /* Üçgenin sol pozisyonunu ayarla (mobilde daha sola) */
+        bottom: -28px; /* Üçgenin arama çubuğuna olan mesafesini ayarla */
+        border-width: 14px; /* Üçgenin boyutunu küçült */
+    }
+
+    .main-search:after {
+        left: 13px; /* Üçgenin sol pozisyonunu ayarla (mobilde daha sola) */
+        bottom: -20px; /* Üçgenin arama çubuğuna olan mesafesini ayarla */
+        border-width: 11px; /* Üçgenin boyutunu küçült */
+    }
+
+    /* Bilgi Kutusu Mobil Stili */
+    .info-box {
+        width: 100%; /* Bilgi kutusunun genişliğini tam yap */
+        padding: 10px; /* Padding'i azalt */
+        margin-top: 5px; /* Sorudan biraz daha yakın yap */
+        font-size: 14px; /* Yazı boyutunu küçült */
+        box-sizing: border-box; /* Padding ve border'ı genişliğe dahil et */
+        max-height: 150px; /* Maksimum yükseklik belirle */
+        overflow-y: auto; /* İçerik uzunsa kaydırma çubuğu göster */
+    }
+
+    .info-box p {
+        margin: 0; /* Paragrafın varsayılan margin'ini kaldır */
+        line-height: 1.4; /* Satır aralığını azalt */
+    }
+
+    .result-item {
+        padding: 10px; /* Soruların padding'ini azalt */
     }
 }
-
 /* 🔹 Tablet Düzenlemeler */
 @media (min-width: 768px) and (max-width: 1024px) {
     .search-bar {

@@ -48,7 +48,7 @@ class DatabaseManager:
                     )
                 """
             }
-            for table, query in tables.items():
+            for tables, query in tables.items():
                 cursor.execute(query)
             conn.commit()
 
@@ -61,4 +61,5 @@ class DatabaseManager:
 
 if __name__ == "__main__":
     db_manager = DatabaseManager()
+    db_manager.create_tables()  # Tabloları oluştur
     print("✅ Veritabanı başarıyla oluşturuldu!")

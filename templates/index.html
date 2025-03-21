@@ -31,9 +31,9 @@
         <!-- Arama Kutusu -->
         <div class="search-bar">
             <form class="input-group input-group-lg main-search" action="#" >
-                <input id="searchInput" type="text" class="form-control rounded-0" name="q" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Kontent'te Ara">
+                <input id="searchInput" type="text" class="form-control rounded-0" name="q" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="KONDA Sordu Mu?">
                 
-                <button class="btn btn-danger rounded-0 px-4" type="submit"><i class="fa fa-search"></i></button>
+                <div class="search-icon-area" type="submit"><i class="fa fa-search"></i></div>
         </form>
         </div>
 
@@ -41,16 +41,23 @@
         <div id="results" class="results-container"></div>
 
         <!-- Favori Sorular Sidebar -->
-        <div id="favorites" class="favorites-container hidden">
-            <h3>Favori Sorular</h3>
-            <div class="favorites-list" id="favoritesList">
-                <!-- Favori sorular buraya dinamik olarak eklenecek -->
-            </div>
-            <div class="email-form">
-                <input type="email" id="emailInput" placeholder="E-posta adresinizi girin" required>
-                <button id="sendEmailButton">Favorileri E-posta ile Gönder</button>
-            </div>
-        </div>
+<div id="favorites" class="favorites-container hidden">
+    <h3>Favori Sorular</h3>
+    <div class="favorites-list" id="favoritesList">
+        <!-- Favori sorular buraya dinamik olarak eklenecek -->
+    </div>
+    
+    <!-- Kullanıcı Notları Bölümü -->
+    <div class="user-notes">
+        <textarea id="userNotes" placeholder="Buraya notlarınızı ekleyebilirsiniz..."></textarea>
+    </div>
+
+    <!-- E-posta Bölümü -->
+    <div class="email-form">
+        <input type="email" id="emailInput" placeholder="E-posta adresinizi girin" required>
+        <button id="sendEmailButton">Favorileri E-posta ile Gönder</button>
+    </div>
+</div>
     </main>
      
     <!-- FOOTER -->

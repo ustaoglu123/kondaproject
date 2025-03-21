@@ -72,11 +72,11 @@ def get_best_match(query):
     word_count = len(query.split())  
     
     # Dinamik eşik değeri hesapla
-    if word_count <= 2:  # Kısa sorgular için yüksek eşik
-        threshold = 60
-    elif 3 <= word_count <= 5:  # Orta uzunluktaki sorgular için orta eşik
+    if word_count <= 1:  
+        threshold = 80
+    elif 2 <= word_count <= 3:  
         threshold = 70
-    else:  # Uzun sorgular için düşük eşik
+    else:  
         threshold = 50
 
     # 📌 Fuzzy matching ile en iyi eşleşmeyi bul
