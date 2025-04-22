@@ -2,10 +2,14 @@ from flask import Flask, render_template, request, jsonify, g
 import sqlite3
 from fuzzywuzzy import process, fuzz
 from contextlib import contextmanager
-
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-
+load_dotenv()
 
 @contextmanager
 def get_db_connection():
@@ -239,5 +243,90 @@ def update_question():
             conn.rollback()
             return jsonify({"message": f"Soru güncellenirken bir hata oluştu: {str(e)}"}), 500
 
+from_email = os.getenv('from_email')
+to_email = os.getenv('to_email')
+from_password = os.getenv('from_password')
+
+def send_email_action(subject, body, to_email):
+    message = MIMEMultipart('alternative')
+    message["From"] = from_email
+    message["To"] = to_email
+    message["Subject"] = subject
+
+    message.attach(MIMEText(body, "html"))
+
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(from_email, from_password)
+            server.sendmail(from_email, to_email, message.as_string())
+        return True, "E-posta başarıyla gönderildi."
+    except Exception as e:
+        return False, str(e)
+
+@app.route("/send-email", methods=["POST"])
+def send_email():
+    data = request.get_json()
+    email = data.get("email")
+    favorites = data.get("favorites")
+    notes = data.get("notes")
+
+    if not email or not favorites:
+        return jsonify({"message": "Email ve favoriler alanı gereklidir."}), 400
+
+    body = f"""
+    <html>
+    <head>
+    <style>
+        body {{
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        }}
+        .container {{
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }}
+        h2 {{
+        color: #333333;
+        }}
+        ul {{
+        padding-left: 20px;
+        }}
+        li {{
+        margin-bottom: 8px;
+        }}
+        .note {{
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-left: 4px solid #007BFF;
+        margin-top: 20px;
+        }}
+    </style>
+    </head>
+    <body>
+    <div class="container">
+        <h2>📬 Yeni Favori Gönderimi</h2>
+        <p><strong>Alıcı E-posta:</strong> {email}</p>
+
+        <h3>⭐ Favoriler:</h3>
+        <ul>
+        {''.join(f"<li>{item}</li>" for item in favorites)}
+        </ul>
+
+        {f'<div class="note"><strong>📝 Notlar:</strong><br>{notes}</div>' if notes else ''}
+    </div>
+    </body>
+    </html>
+    """
+
+    success, message = send_email_action('Yeni Bir Ileti', body, to_email)
+    if success:
+        return jsonify({"success": True})
+    else:
+        return jsonify({"success": False}), 500
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    from waitress import serve
+    serve(app, host='0.0.0.0', port=8080)

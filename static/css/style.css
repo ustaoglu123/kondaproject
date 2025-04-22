@@ -359,7 +359,7 @@ body {
 .email-form button {
     width: 100%;
     padding: 10px;
-    background-color: #ce2226;
+    background-color: #c82333;
     color: white;
     border: none;
     border-radius: 6px;
@@ -367,9 +367,6 @@ body {
     cursor: pointer;
 }
 
-.email-form button:hover {
-    background-color: #ce2226;
-}
 
 /* 🔹 Footer */
 footer {

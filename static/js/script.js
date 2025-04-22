@@ -6,11 +6,58 @@ document.addEventListener("DOMContentLoaded", function () {
     const favoritesList = document.getElementById("favoritesList");
     const emailForm = document.querySelector(".email-form");
     const emailInput = document.getElementById("emailInput");
+    const userNotes = document.getElementById("userNotes");
     const sendEmailButton = document.getElementById("sendEmailButton");
     const mobileFavoritesButton = document.getElementById("mobileFavoritesButton");
     const desktopFavoritesButton = document.getElementById("desktopFavoritesButton");
     const favoriteToggle = document.getElementById("favoriteToggle");
     const footer = document.querySelector('footer');
+
+    emailForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Formun sayfayı yenilemesini engelle
+    
+        const emailValue = emailInput.value.trim();
+        const userNotesValue = userNotes.value.trim();
+        const favoriteQuestions = JSON.parse(localStorage.getItem("favorites")) || [];
+    
+        const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        
+        if (!emailValue || !emailValue.match(emailRegex)) {
+            alert("Lütfen geçerli bir e-posta adresi girin.");
+            return;
+        }
+
+        if (favoriteQuestions.length == 0) {
+            alert("Lütfen favori sorularınızı seciniz.");
+        }
+    
+        const emailContent = {
+            email: emailValue,
+            favorites: favoriteQuestions,
+            notes: userNotesValue
+        };
+    
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(emailContent),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Favori sorularınız ve notlarınız başarıyla gönderildi!");
+                emailForm.reset(); // formu temizle
+            } else {
+                alert("E-posta gönderilirken bir hata oluştu.");
+            }
+        })
+        .catch(error => {
+            console.error("Hata:", error);
+            alert("E-posta gönderilirken bir hata oluştu.");
+        });
+    });    
 
     
     let favoriteQuestions = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -91,45 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    document.getElementById("sendEmailButton").addEventListener("click", function () {
-        const email = document.getElementById("emailInput").value.trim();
-        const userNotes = document.getElementById("userNotes").value.trim();
-        const favoriteQuestions = JSON.parse(localStorage.getItem("favorites")) || [];
-    
-        
-        if (!email) {
-            alert("Lütfen geçerli bir e-posta adresi girin.");
-            return;
-        }
-    
-        // Favori sorular ve notlar birleştirilir
-        const emailContent = {
-            email: email,
-            favorites: favoriteQuestions,
-            notes: userNotes
-        };
-    
-        // API'ye POST isteği
-        fetch('/send-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(emailContent),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Favori sorularınız ve notlarınız başarıyla gönderildi!");
-            } else {
-                alert("E-posta gönderilirken bir hata oluştu.");
-            }
-        })
-        .catch(error => {
-            console.error("Hata:", error);
-            alert("E-posta gönderilirken bir hata oluştu.");
-        });
-    });
     searchInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault(); 

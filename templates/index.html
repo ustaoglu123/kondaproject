@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#ce2226">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Konda Ne Sordu?</title>
+    <title>Konda Sordu Mu?</title>
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/kondao.png') }}" type="image/x-icon">
     
     <!-- Font Awesome for Icons -->
@@ -41,23 +41,21 @@
         <div id="results" class="results-container"></div>
 
         <!-- Favori Sorular Sidebar -->
-<div id="favorites" class="favorites-container hidden">
-    <h3>Favori Sorular</h3>
-    <div class="favorites-list" id="favoritesList">
-        <!-- Favori sorular buraya dinamik olarak eklenecek -->
-    </div>
-    
-    <!-- Kullanıcı Notları Bölümü -->
-    <div class="user-notes">
-        <textarea id="userNotes" placeholder="Buraya notlarınızı ekleyebilirsiniz..."></textarea>
-    </div>
+        <div id="favorites" class="favorites-container hidden">
+            <h3>Favori Sorular</h3>
+            <div class="favorites-list" id="favoritesList">
+                <!-- Favori sorular buraya dinamik olarak eklenecek -->
+            </div>
 
-    <!-- E-posta Bölümü -->
-    <div class="email-form">
-        <input type="email" id="emailInput" placeholder="E-posta adresinizi girin" required>
-        <button id="sendEmailButton">Favorileri E-posta ile Gönder</button>
-    </div>
-</div>
+            <!-- E-posta Bölümü -->
+            <form class="email-form">
+                <div class="user-notes">
+                    <textarea id="userNotes" placeholder="Buraya notlarınızı ekleyebilirsiniz..."></textarea>
+                </div>
+                <input type="email" id="emailInput" placeholder="E-posta adresinizi girin" required>
+                <button id="sendEmailButton">Favorileri E-posta ile Gönder</button>
+            </form>
+        </div>
     </main>
      
     <!-- FOOTER -->
