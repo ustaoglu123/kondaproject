@@ -97,22 +97,24 @@ document.addEventListener("DOMContentLoaded", function () {
             item.className = "favorite-item";
             item.innerHTML = `
                 <span>${question}</span>
-                <button class="remove-fav" data-index="${index}">❌</button>
+                <input type="checkbox" class="remove-fav-checkbox" data-index="${index}" ${favoriteQuestions.includes(question) ? 'checked' : ''} />
             `;
             favoritesList.appendChild(item);
         });
 
-        // Favori silme butonlarına olay dinleyicisi ekle
-        document.querySelectorAll(".remove-fav").forEach(button => {
-            button.addEventListener("click", function(event) {
-                event.stopPropagation();
+        // Checkbox'lara olay dinleyicisi ekle
+        document.querySelectorAll(".remove-fav-checkbox").forEach(checkbox => {
+            checkbox.addEventListener("change", function(event) {
                 const index = parseInt(this.dataset.index);
-                removeFavorite(index);
+                if (this.checked) {
+                    addFavorite(favoriteQuestions[index]);
+                } else {
+                    removeFavorite(index);
+                }
             });
         });
     }
 
-    
     function addFavorite(question) {
         if (!favoriteQuestions.includes(question)) {
             favoriteQuestions.push(question);
@@ -122,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-  
     function removeFavorite(index) {
         favoriteQuestions.splice(index, 1);
         localStorage.setItem("favorites", JSON.stringify(favoriteQuestions));
@@ -134,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateFavoriteIcons() {
         document.querySelectorAll(".fav-button").forEach(button => {
             const question = button.previousElementSibling.textContent;
-            button.textContent = favoriteQuestions.includes(question) ? "❤️" : "🤍";
+            button.textContent = favoriteQuestions.includes(question) ? "✅" : "❌";
         });
     }
 
@@ -177,23 +178,21 @@ document.addEventListener("DOMContentLoaded", function () {
                             let textDiv = document.createElement("span");
                             textDiv.textContent = item.soru;
                         
-                            let favButton = document.createElement("span");
-                            favButton.className = "fav-button";
-                            favButton.textContent = favoriteQuestions.includes(item.soru) ? "❤️" : "🤍";
+                            let favCheckbox = document.createElement("input");
+                            favCheckbox.type = "checkbox";
+                            favCheckbox.className = "fav-checkbox";
+                            favCheckbox.checked = favoriteQuestions.includes(item.soru);
                         
-                            favButton.addEventListener("click", function (event) {
-                                event.stopPropagation();
-                                if (this.textContent === "❤️") {
-                                    removeFavorite(favoriteQuestions.indexOf(item.soru));
-                                    this.textContent = "🤍";
-                                } else {
+                            favCheckbox.addEventListener("change", function (event) {
+                                if (this.checked) {
                                     addFavorite(item.soru);
-                                    this.textContent = "❤️";
+                                } else {
+                                    removeFavorite(favoriteQuestions.indexOf(item.soru));
                                 }
                             });
                         
                             innerDiv.appendChild(textDiv);
-                            innerDiv.appendChild(favButton);
+                            innerDiv.appendChild(favCheckbox);
                         
                             div.appendChild(innerDiv);
                         
@@ -282,6 +281,5 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    
     updateFavoritesList();
 }); 
