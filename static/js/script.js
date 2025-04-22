@@ -113,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         });
+
+        updateFavoriteIcons();
     }
 
     function addFavorite(question) {
@@ -129,13 +131,18 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("favorites", JSON.stringify(favoriteQuestions));
         updateFavoritesList();
         updateFavoriteIcons();
+
+        document.querySelectorAll(".fav-checkbox").forEach(checkbox => {
+            const question = checkbox.previousElementSibling.textContent;
+            checkbox.checked = favoriteQuestions.includes(question);
+        });
     }
 
     // Favori ikonlarını güncelle
     function updateFavoriteIcons() {
-        document.querySelectorAll(".fav-button").forEach(button => {
-            const question = button.previousElementSibling.textContent;
-            button.textContent = favoriteQuestions.includes(question) ? "✅" : "❌";
+        document.querySelectorAll(".fav-checkbox").forEach(checkbox => {
+            const question = checkbox.previousElementSibling.textContent;
+            checkbox.checked = favoriteQuestions.includes(question);
         });
     }
 

@@ -443,6 +443,10 @@ footer {
     opacity: 0.8;
 }
 
+.fav-checkbox, .remove-fav-checkbox {
+    accent-color: rgb(202, 43, 39);
+}
+
 /* 🔹 Mobil ve Tablet Ortak Düzenlemeler */
 @media (max-width: 1024px) {
     .content {
